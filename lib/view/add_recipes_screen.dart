@@ -1,19 +1,18 @@
 import 'package:croctop/services/authentification_service.dart';
-import 'package:croctop/view/add_recipes_screen.dart';
+import 'package:croctop/view/home_screen.dart';
 import 'package:croctop/view/profil_screen.dart';
-import 'package:croctop/view/signin_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AddRecipesScreen extends StatefulWidget {
+  const AddRecipesScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AddRecipesScreen> createState() => _AddRecipesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _AddRecipesScreenState extends State<AddRecipesScreen> {
   final AuthentificationService _authService = AuthentificationService();
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   String? _token;
 
   @override
@@ -29,26 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _signout() async {
-    await _authService.signout();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const SigninScreen()),
-    );
-  }
-
   void _selectTab(int index) {
     setState(() {
       _selectedIndex = index;
       print('Selected tab: $_selectedIndex');
-      print('Token: $_token');
+      if (_selectedIndex == 0) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      }
       if (_selectedIndex == 4) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const ProfileScreen()));
-      }
-      if (_selectedIndex == 3) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const AddRecipesScreen()));
       }
     });
   }
@@ -57,15 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _signout,
-          ),
-        ],
+        title: const Text('Add Recipes'),
       ),
       body: const Center(
-        child: Text('Welcome to CrocTop !'),
+        child: Text('Add Recipes'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
