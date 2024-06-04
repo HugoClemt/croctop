@@ -1,6 +1,7 @@
 import 'package:croctop/services/authentification_service.dart';
 import 'package:croctop/view/add_recipes_screen.dart';
 import 'package:croctop/view/home_screen.dart';
+import 'package:croctop/view/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -52,6 +53,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  void _signout() async {
+    await _authService.signout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SigninScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
-            },
+            onPressed: _signout,
           ),
         ],
       ),
