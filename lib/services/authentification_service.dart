@@ -7,9 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthentificationService {
   final String _baseUrl = 'http://api.croc-top.com';
 
-  Future<ApiResponse> signin(String email, String password) async {
+  Future<ApiResponse> signin(String identifier, String password) async {
     final Map<String, String> data = {
-      'email': email,
+      'email': identifier.contains('@') ? identifier : '',
+      'username': identifier.contains('@') ? '' : identifier,
       'password': password,
     };
 
@@ -38,7 +39,7 @@ class AuthentificationService {
     } else {
       return ApiResponse(
         success: false,
-        message: 'Failed to login',
+        message: jsonDecode(response.body)['message'] ?? 'Failed to login',
       );
     }
   }
