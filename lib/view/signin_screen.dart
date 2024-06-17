@@ -42,6 +42,12 @@ class _SigninScreenState extends State<SigninScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/img/background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
