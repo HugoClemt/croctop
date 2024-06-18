@@ -99,24 +99,4 @@ class AuthentificationService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
   }
-
-  Future<Map<String, dynamic>?> getUserInfo() async {
-    final token = await getToken();
-    if (token == null) return null;
-
-    final response = await http.get(
-      Uri.parse('$_baseUrl/users/me'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as Map<String, dynamic>;
-    } else {
-      print('Failed to load user info: ${response.body}');
-      return null;
-    }
-  }
 }
